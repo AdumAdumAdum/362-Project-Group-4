@@ -38,7 +38,7 @@ If it isn't installed, install Docker ([Windows](https://docs.docker.com/desktop
 In the repo folder run
 
 ```bash
-> docker-compose up
+> docker-compose up -d --build
 ```
 
 And now go to [http://localhost:3000](http://localhost:3000)
@@ -50,5 +50,5 @@ And now go to [http://localhost:3000](http://localhost:3000)
 | `npm install`    | Install the dependencies              |
 | `npm start`      | Start a dev server with HMR           |
 | `npm run build`  | Build minified bundles ready for prod |
-| `npm run lint`   | Lints files with ESLint               |
-| `npm run format` | Formats files using prettier          |
+| `npm run lint`   | Lint files with ESLint               |
+| `npm run format` | Format files using prettier          |
