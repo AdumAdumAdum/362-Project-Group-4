@@ -29,7 +29,7 @@ Then start up the dev server. It should automatically open [http://localhost:300
 
 Make sure you have Docker installed
 
-```
+```bash
 > docker -v
 ```
 
