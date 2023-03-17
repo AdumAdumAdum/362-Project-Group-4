@@ -27,6 +27,8 @@ Then start up the dev server. It should automatically open [http://localhost:300
 
 ### Using Docker (Recommended)
 
+Docker helps solve the "works on my machine" problem. It bundles the dependencies of an application under the same execution environment. Essentially freeing the need to install dependencies like Node and npm to get an application running.
+
 Make sure you have Docker installed
 
 ```bash
@@ -38,7 +40,7 @@ If it isn't installed, install Docker ([Windows](https://docs.docker.com/desktop
 In the repo folder run
 
 ```bash
-> docker-compose up -d --build
+> npm run docker
 ```
 
 And now go to [http://localhost:3000](http://localhost:3000)
@@ -50,5 +52,6 @@ And now go to [http://localhost:3000](http://localhost:3000)
 | `npm install`    | Install the dependencies              |
 | `npm start`      | Start a dev server with HMR           |
 | `npm run build`  | Build minified bundles ready for prod |
-| `npm run lint`   | Lint files with ESLint               |
-| `npm run format` | Format files using prettier          |
+| `npm run lint`   | Lint files with ESLint                |
+| `npm run format` | Format files using prettier           |
+| `npm run docker` | Runs Docker                           |
