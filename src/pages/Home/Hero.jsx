@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css, keyframes } from '@emotion/react';
 import { Box, Button, Container, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const bounceAnim = keyframes`
  from {
@@ -21,6 +22,7 @@ function FullWidth({ children }) {
     <Box
       as="section"
       sx={{
+        paddingTop: '2.4rem',
         width: '100%',
       }}
     >
@@ -38,7 +40,7 @@ export function Hero() {
           alignItems: 'center',
           padding: '2em',
           flexWrap: 'wrap',
-          minHeight: '80vh',
+          minHeight: '75vh',
           maxHeight: '1200px',
           background: 'rgb(173, 216, 230)',
           marginTop: '2em',
@@ -78,7 +80,13 @@ export function Hero() {
             >
               A place to share properties with like-minded folk
             </Typography>
-            <Button variant="contained" size="medium" sx={{ alignSelf: 'flex-start' }}>
+            <Button
+              component={RouterLink}
+              to="/sign-up"
+              variant="contained"
+              size="medium"
+              sx={{ alignSelf: 'flex-start' }}
+            >
               Create an account
             </Button>
           </Box>
