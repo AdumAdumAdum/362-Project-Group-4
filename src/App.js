@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import { Home } from './pages';
+import { Dashboard, Home, LogIn, SignUp } from './pages';
 
 function App() {
   return (
@@ -9,8 +9,10 @@ function App() {
       <Routes>
         <Route path="/">
           <Route index element={<Home />} />
-          <Route path="sign-up" element={<p>Sign up</p>} />
-          <Route path="log-in" element={<p>Log in</p>} />
+          <Route path="sign-up" element={<SignUp />} />
+          <Route path="log-in" element={<LogIn />} />
+          <Route path="log-in" element={<LogIn />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<p>We can't find that page!</p>} />
         </Route>
       </Routes>

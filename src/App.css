@@ -6,6 +6,13 @@
   padding: 0;
 }
 
+html,
+body,
+#root,
+main {
+  height: 100%;
+}
+
 body {
   overflow-x: hidden;
 }
