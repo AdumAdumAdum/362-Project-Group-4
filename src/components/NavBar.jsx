@@ -87,7 +87,10 @@ export function NavBar() {
               },
             }}
           >
-            Estators
+             <Box component="img" sx={{
+            height: '55px',
+            width: "auto"}} 
+            src="https://cdn.discordapp.com/attachments/1099351320172957798/1099362997325021193/estatelogo.png" />
           </Button>
           <Box sx={{ display: { xs: 'none', sm: 'block', md: 'flex' } }}>
             {navItems.map((item, index) => (

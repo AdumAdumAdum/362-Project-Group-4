@@ -47,7 +47,10 @@ export function LoggedInNavBar({ name, onClick, onDelete }) {
               },
             }}
           >
-            Estators
+            <Box component="img" sx={{
+            height: '55px',
+            width: "auto"}} 
+            src="https://cdn.discordapp.com/attachments/1099351320172957798/1099362997325021193/estatelogo.png" />
           </Button>
           <div>
             <Button
