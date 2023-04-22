@@ -11,16 +11,16 @@ export function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
   const [name, setName] = useState('');
-  const [posts, setPosts] = [];
+  const [userPosts, setUserPosts] = useState([]);
 
-  const fetchUsername = async () => {
+  const fetchUserData = async () => {
     try {
       const q = query(collection(db, 'users'), where('uid', '==', user?.uid));
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
 
       setName(data.name);
-      setPosts(data.posts);
+      setUserPosts([...data.posts]);
     } catch (err) {
       console.error(err);
       alert('An error occured while fetching user data');
@@ -31,7 +31,8 @@ export function Dashboard() {
     if (!user) {
       return navigate('/log-in');
     }
-    fetchUsername();
+    console.log(userPosts);
+    fetchUserData();
   }, [user]);
 
   return (
@@ -66,23 +67,11 @@ export function Dashboard() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
+              padding: "4rem 0"
             }}
           >
-            <Typography
-              as="h1"
-              sx={{
-                fontSize: '3em',
-                fontFamily: 'Inter',
-                fontWeight: 700,
-                paddingBottom: '1.25rem',
-              }}
-            >
-              Hi {!!name ? name : 'there'}! (Signed in using the email: {user?.email})
-            </Typography>
-            {posts.length !== 0 &&
-                posts.map((post, index) => {
-                  <Post {...post} />;
-                })}
+            {userPosts?.map((post, index) => <Post {...post} key={index} />
+                )}
           </Container>
         </>
       )}
