@@ -1,13 +1,19 @@
 import GoogleIcon from '@mui/icons-material/Google';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {
   Box,
   Button,
   CircularProgress,
   Container,
+  InputLabel,
   Link,
+  OutlinedInput,
   TextField,
   Typography,
 } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -17,6 +23,7 @@ import { auth, logInWithEmailAndPassword, signInWithGoogle } from '../../config/
 export function LogIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
 
@@ -25,6 +32,12 @@ export function LogIn() {
       navigate('/dashboard');
     }
   }, [user]);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <>
@@ -72,16 +85,28 @@ export function LogIn() {
                 sx={{ gridArea: 'email' }}
                 required
               />
-              <TextField
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <OutlinedInput
+                id="password"
                 label="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                id="password"
-                variant="outlined"
                 sx={{ gridArea: 'password' }}
                 required
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
               />
-
               <Button
                 onClick={() => logInWithEmailAndPassword(email, password)}
                 variant="contained"

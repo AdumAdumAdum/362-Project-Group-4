@@ -5,11 +5,13 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 import { LoggedInNavBar } from '../../components/LoggedInNavBar';
 import { auth, db, deleteAccount, logout } from '../../config/firebase';
+import { Post } from '../../components/Post/Post';
 
 export function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
   const [name, setName] = useState('');
+  const [posts, setPosts] = [];
 
   const fetchUsername = async () => {
     try {
@@ -18,6 +20,7 @@ export function Dashboard() {
       const data = doc.docs[0].data();
 
       setName(data.name);
+      setPosts(data.posts);
     } catch (err) {
       console.error(err);
       alert('An error occured while fetching user data');
@@ -76,6 +79,10 @@ export function Dashboard() {
             >
               Hi {!!name ? name : 'there'}! (Signed in using the email: {user?.email})
             </Typography>
+            {posts.length !== 0 &&
+                posts.map((post, index) => {
+                  <Post {...post} />;
+                })}
           </Container>
         </>
       )}

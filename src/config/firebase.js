@@ -39,6 +39,11 @@ const signInWithGoogle = async () => {
         name: user.displayName,
         authProvider: 'google',
         email: user.email,
+        posts: [{
+          caption: "For Sale",
+          imageUrl: "https://ap.rdcpix.com/4eb525159fae002d605290ec7bf69576l-m770973287od-w480_h360_x2.jpg",
+          username: "Danny"
+      }]
       });
     }
   } catch (err) {
@@ -63,6 +68,11 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       name,
       authProvider: 'local',
       email,
+      posts: [{
+        caption: "For Sale",
+        imageUrl: "https://ap.rdcpix.com/4eb525159fae002d605290ec7bf69576l-m770973287od-w480_h360_x2.jpg",
+        username: "Danny"
+    }]
     });
   } catch (err) {
     console.error(err);
