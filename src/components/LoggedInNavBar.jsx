@@ -8,7 +8,7 @@ import Toolbar from '@mui/material/Toolbar';
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-export function LoggedInNavBar({ name, onClick, onDelete }) {
+export function LoggedInNavBar({ username, profilePicture, onClick, onDelete }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -60,7 +60,8 @@ export function LoggedInNavBar({ name, onClick, onDelete }) {
               aria-expanded={open ? 'true' : undefined}
               onClick={handleClick}
             >
-              <Avatar>{name}</Avatar>
+              <Avatar alt={`{username}'s Profile Picture`}
+          src={profilePicture} />
             </Button>
             <Menu
               id="basic-menu"

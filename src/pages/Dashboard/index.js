@@ -6,21 +6,42 @@ import { useNavigate } from 'react-router-dom';
 import { LoggedInNavBar } from '../../components/LoggedInNavBar';
 import { auth, db, deleteAccount, logout } from '../../config/firebase';
 import { Post } from '../../components/Post/Post';
+import { MakePostModal } from './MakePostModal';
 
 export function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
-  const [name, setName] = useState('');
+  const [userInfo, setUserInfo] = useState({ uid: null, username: null, profilePicture: null });
   const [userPosts, setUserPosts] = useState([]);
+
+  // Handle's post creation modal
+  const [open, setOpen] = React.useState(false);
+    
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const fetchUserData = async () => {
     try {
-      const q = query(collection(db, 'users'), where('uid', '==', user?.uid));
-      const doc = await getDocs(q);
-      const data = doc.docs[0].data();
+      const userQuery =  query(collection(db, 'users'), where('uid', '==', user?.uid));
+      const postsQuery = query(collection(db, 'posts'), where('uid', '==', user?.uid));
+      const postsSnapshot = await getDocs(postsQuery);
+      const userSnapshot = await getDocs(userQuery);
+      const data = userSnapshot.docs[0].data();
 
-      setName(data.name);
-      setUserPosts([...data.posts]);
+      setUserInfo({
+        uid: data.uid,
+        username: data.name,
+        profilePicture: data.profilePicture,
+      });
+
+      // Note: QuerySnapshot isn't an iterable so that's why we have to
+      // create a separate posts array and push the data.
+      const posts = [];
+      postsSnapshot.forEach((doc) => {
+        posts.push(doc.data());
+      });
+
+      setUserPosts([...posts]);
     } catch (err) {
       console.error(err);
       alert('An error occured while fetching user data');
@@ -31,7 +52,6 @@ export function Dashboard() {
     if (!user) {
       return navigate('/log-in');
     }
-    console.log(userPosts);
     fetchUserData();
   }, [user]);
 
@@ -56,7 +76,8 @@ export function Dashboard() {
           <LoggedInNavBar
             onClick={logout}
             onDelete={deleteAccount}
-            name={!!name ? name : user?.email}
+            username={userInfo.username}
+            profilePicture={userInfo.profilePicture}
           />
           <Container
             sx={{
@@ -70,7 +91,11 @@ export function Dashboard() {
               padding: "4rem 0"
             }}
           >
-            {userPosts?.map((post, index) => <Post {...post} key={index} />
+            <MakePostModal uid={userInfo.uid} open={open} onClick={handleOpen} onClose={handleClose} />
+            {userPosts?.map((post, index) => <Post 
+              username={userInfo.username} 
+              profilePicture={userInfo.profilePicture}
+             {...post} key={index} />
                 )}
           </Container>
         </>

@@ -11,7 +11,6 @@ function App() {
           <Route index element={<Home />} />
           <Route path="sign-up" element={<SignUp />} />
           <Route path="log-in" element={<LogIn />} />
-          <Route path="log-in" element={<LogIn />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<p>We can't find that page!</p>} />
         </Route>

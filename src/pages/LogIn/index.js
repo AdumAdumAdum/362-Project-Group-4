@@ -54,7 +54,7 @@ export function LogIn() {
         }}
       >
         {loading ? (
-          <CircularProgress />
+          <CircularProgress sx={{alignSelf: 'center' }} />
         ) : (
           <>
             <Typography
@@ -120,7 +120,7 @@ export function LogIn() {
               </Button>
             </Box>
             <Link
-              to="/log-in"
+              to="/sign-up"
               component={RouterLink}
               underline="always"
               sx={{ alignSelf: 'center', paddingTop: '2rem' }}

@@ -39,12 +39,19 @@ const signInWithGoogle = async () => {
         name: user.displayName,
         authProvider: 'google',
         email: user.email,
-        posts: [{
-          caption: "For Sale",
-          imageUrl: "https://ap.rdcpix.com/4eb525159fae002d605290ec7bf69576l-m770973287od-w480_h360_x2.jpg",
-          username: "Danny"
-      }]
+        profilePicture: "https://www.famousbirthdays.com/headshots/low-tier-god-1.jpg",
+
       });
+
+      await addDoc(collection(db, 'posts'), {
+        uid: user.uid,
+       
+          dateCreated: new Date().toISOString(),
+          imageUrl: "https://ap.rdcpix.com/4eb525159fae002d605290ec7bf69576l-m770973287od-w480_h360_x2.jpg",
+          caption: "A place where you can share properties...",
+          description: "Welcome to Estators",
+          likes: null,
+      })
     }
   } catch (err) {
     console.error(err);
@@ -68,12 +75,18 @@ const registerWithEmailAndPassword = async (name, email, password) => {
       name,
       authProvider: 'local',
       email,
-      posts: [{
-        caption: "For Sale",
-        imageUrl: "https://ap.rdcpix.com/4eb525159fae002d605290ec7bf69576l-m770973287od-w480_h360_x2.jpg",
-        username: "Danny"
-    }]
+      profilePicture: "https://www.famousbirthdays.com/headshots/low-tier-god-1.jpg",
     });
+
+    await addDoc(collection(db, 'posts'), {
+      uid: user.uid,
+
+      dateCreated: new Date().toISOString(),
+      imageUrl: "https://ap.rdcpix.com/4eb525159fae002d605290ec7bf69576l-m770973287od-w480_h360_x2.jpg",
+      caption: "A place where you can share properties...",
+      description: "Welcome to Estators",
+      likes: null,
+    })
   } catch (err) {
     console.error(err);
     alert(err.message);
@@ -102,6 +115,21 @@ const deleteAccount = async () => {
   }
 };
 
+const addPostToCollection = async (uid, imageUrl, caption, description) => {
+  try {
+  const docRef = await addDoc(collection(db, "posts"), {
+    uid: uid,
+    dateCreated: new Date().toISOString(),
+    imageUrl,
+    caption,
+    description,
+    likes: 0,
+  });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export {
   auth,
   db,
@@ -111,4 +139,5 @@ export {
   sendPasswordReset,
   logout,
   deleteAccount,
+  addPostToCollection
 };

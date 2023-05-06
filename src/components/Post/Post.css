@@ -4,13 +4,18 @@
 }
 
 .post__text {
+  font-weight: 500;
+}
+
+.post__username {
   font-weight: normal;
 }
+
 
 .post__header {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 20px 0;
 }
 
 .post__avatar {
