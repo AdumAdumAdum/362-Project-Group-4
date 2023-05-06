@@ -7,7 +7,14 @@ import {
   Link,
   TextField,
   Typography,
+  FormControl,
+  InputLabel,
+  OutlinedInput
 } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
@@ -21,6 +28,14 @@ export function SignUp() {
   const [password, setPassword] = useState('');
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const register = () => {
     registerWithEmailAndPassword(name, email, password);
@@ -87,16 +102,29 @@ export function SignUp() {
                 sx={{ gridArea: 'email' }}
                 required
               />
-              <TextField
+              <FormControl sx={{ gridArea: 'password' }} variant="outlined">
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <OutlinedInput
+                id="password"
                 label="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                id="password"
-                variant="outlined"
-                autoComplete="off"
-                sx={{ gridArea: 'password' }}
                 required
+                type={showPassword ? 'text' : 'password'}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
               />
+              </FormControl>
               <Button onClick={register} variant="contained" sx={{ gridArea: 'register' }}>
                 Register Account
               </Button>

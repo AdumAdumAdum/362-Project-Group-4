@@ -11,6 +11,7 @@ import {
   OutlinedInput,
   TextField,
   Typography,
+  FormControl
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -85,6 +86,7 @@ export function LogIn() {
                 sx={{ gridArea: 'email' }}
                 required
               />
+              <FormControl variant="outlined">
               <InputLabel htmlFor="password">Password</InputLabel>
               <OutlinedInput
                 id="password"
@@ -107,6 +109,7 @@ export function LogIn() {
                   </InputAdornment>
                 }
               />
+              </FormControl>
               <Button
                 onClick={() => logInWithEmailAndPassword(email, password)}
                 variant="contained"

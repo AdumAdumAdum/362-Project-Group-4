@@ -15,22 +15,28 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  display: 'grid',
+  gap: '1.2rem',
+  maxWidth: '600px',
+  width: '100%',
+  padding: '2.4rem',
 };
 
 
-export function MakePostModal({ uid, open, onClick, onClose }) {
+export function MakePostModal({ uid, open, onClick, onClose, updatePosts }) {
   const [caption, setCaption] = useState('');
   const [description, setDescription] = useState('');
   const [url, setURL] = useState('');
 
-  const createPost = () => {
-    addPostToCollection(uid, url, caption, description);
+  const createPost = async () => {
+    const newPost = await addPostToCollection(uid, url, caption, description);
+    updatePosts(newPost);
   };
 
     // Caption, description, imageURL
     return (
-        <div>
-            <Button onClick={onClick}>Add a new post</Button>
+        <Box sx={{ justifySelf: 'center' }}>
+            <Button onClick={onClick} variant="contained">Create Post</Button>
             <Modal
         open={open}
         onClose={onClose}
@@ -45,6 +51,7 @@ export function MakePostModal({ uid, open, onClick, onClose }) {
                 fontFamily: 'Inter',
                 fontWeight: 700,
                 paddingBottom: '1.25rem',
+                lineHeight: '0.8'
               }}
             >
               Make a Post
@@ -75,6 +82,6 @@ export function MakePostModal({ uid, open, onClick, onClose }) {
               <Button onClick={createPost} variant="contained">Create Post</Button>
         </Box>
       </Modal>
-        </div>
+        </Box>
     );
 }

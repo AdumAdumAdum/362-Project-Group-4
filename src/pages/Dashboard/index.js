@@ -1,4 +1,6 @@
-import { CircularProgress, Container, Typography } from '@mui/material';
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import { CircularProgress, Container, Typography, Box } from '@mui/material';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -7,6 +9,7 @@ import { LoggedInNavBar } from '../../components/LoggedInNavBar';
 import { auth, db, deleteAccount, logout } from '../../config/firebase';
 import { Post } from '../../components/Post/Post';
 import { MakePostModal } from './MakePostModal';
+
 
 export function Dashboard() {
   const [user, loading, error] = useAuthState(auth);
@@ -19,6 +22,11 @@ export function Dashboard() {
     
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const addPost = (newPost) => {
+    setUserPosts([newPost, ...userPosts]);
+    console.log(setUserPosts);
+  };
 
   const fetchUserData = async () => {
     try {
@@ -79,25 +87,36 @@ export function Dashboard() {
             username={userInfo.username}
             profilePicture={userInfo.profilePicture}
           />
+          <Box sx={{ display: 'flex', justifyContent: 'center', padding: "0 4.8rem"}}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignSelf: 'flex-start', alignItems: 'center', position: 'sticky', top: '150px' }}>
+              <img src={userInfo.profilePicture}
+                css={css`
+                  border-radius: 4px;
+                `}
+                />
+              <Typography as="h3" sx={{ fontWeight: 500, padding: '2rem'}}>{userInfo.username}</Typography>
+              <MakePostModal uid={userInfo.uid} open={open} onClick={handleOpen} onClose={handleClose} updatePosts={addPost} />
+            </Box>
           <Container
             sx={{
-              height: '100%',
+              height: 'auto%',
               maxWidth: {
                 sm: '600px',
               },
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              padding: "4rem 0"
+              display: "grid",
+              padding: "150px 0",
+              gridGap: "5rem",
+              gridTemplateColumns: 'repeat(auto-fill, 500px)',
+              placContent: 'center'
             }}
           >
-            <MakePostModal uid={userInfo.uid} open={open} onClick={handleOpen} onClose={handleClose} />
             {userPosts?.map((post, index) => <Post 
               username={userInfo.username} 
               profilePicture={userInfo.profilePicture}
              {...post} key={index} />
                 )}
           </Container>
+          </Box>
         </>
       )}
     </>

@@ -37,7 +37,6 @@ export function LoggedInNavBar({ username, profilePicture, onClick, onDelete }) 
             component={RouterLink}
             to="/dashboard"
             sx={{
-              flexGrow: 1,
               color: 'inherit',
               fontWeight: '600',
               fontSize: '1.25em',
@@ -52,6 +51,8 @@ export function LoggedInNavBar({ username, profilePicture, onClick, onDelete }) 
             width: "auto"}} 
             src="https://cdn.discordapp.com/attachments/1099351320172957798/1099362997325021193/estatelogo.png" />
           </Button>
+          <Button component={RouterLink} sx={{ margin: '0 auto' }}
+            to="/feed">Feed</Button>
           <div>
             <Button
               id="basic-button"

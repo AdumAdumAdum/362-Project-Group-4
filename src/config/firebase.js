@@ -116,18 +116,22 @@ const deleteAccount = async () => {
 };
 
 const addPostToCollection = async (uid, imageUrl, caption, description) => {
-  try {
-  const docRef = await addDoc(collection(db, "posts"), {
+  const post = {
     uid: uid,
     dateCreated: new Date().toISOString(),
     imageUrl,
     caption,
     description,
     likes: 0,
-  });
+  };
+
+  try {
+    const docRef = await addDoc(collection(db, "posts"), post);
   } catch (err) {
     console.error(err);
   }
+
+  return post;
 };
 
 export {

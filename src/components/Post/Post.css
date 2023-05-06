@@ -1,3 +1,10 @@
+.post {
+  background: #e2e8f0;
+    border-radius: 5px;
+    padding: 1.6rem 2.4rem;
+    box-shadow: inset 4px -5px 0px #d1d5db;
+}
+
 .post__image {
   width: 100%;
   object-fit: contain;
@@ -15,7 +22,15 @@
 .post__header {
   display: flex;
   align-items: center;
-  padding: 20px 0;
+  position: relative;
+    top: -10%;
+    background: #c7d2fe;
+    color: #312e81;
+    box-shadow: -2px 2px 0px #c4b5fd;
+    border-radius: 21px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    max-width: 175px;
 }
 
 .post__avatar {
